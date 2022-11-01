@@ -62,7 +62,7 @@ export const SignUp = () => {
               onChange={setPassword}
             />
             {errorMessage && <p>{translateError(errorMessage)}</p>}
-            <Button title="Register" />
+            <Button title="Signup" />
           </>
         )}
       </form>

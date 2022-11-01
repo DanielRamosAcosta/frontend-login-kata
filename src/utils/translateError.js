@@ -9,6 +9,7 @@ export function translateError(code) {
     case "email_already_exists":
       return "Email already exists";
     default:
+      console.warn(`Unknown translation "${code}"`);
       return "Unknown error";
   }
 }
