@@ -6,7 +6,7 @@ import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
 
-export const SignUp = () => {
+export const SignUp = ({ authService }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -22,19 +22,9 @@ export const SignUp = () => {
         className="signup-form"
         onSubmit={(event) => {
           event.preventDefault();
-          fetch("http://localhost:8000/api/users", {
-            method: "POST",
-            body: JSON.stringify({ email, password }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.status === "error") {
-                throw new Error(data.code);
-              }
-            })
+
+          authService
+            .login(email, password)
             .then(() => {
               setSignUpSuccess(true);
             })
