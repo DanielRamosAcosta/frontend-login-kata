@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import "./Login.css";
+import "./SignUp.css";
 import { EmailField } from "../components/EmailField.jsx";
 import { PasswordField } from "../components/PasswordField.jsx";
 import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
 
-export const Login = () => {
+export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -17,9 +17,9 @@ export const Login = () => {
   }, [email, password]);
 
   return (
-    <main className="login-container">
+    <main className="signup-container">
       <form
-        className="login-form"
+        className="signup-form"
         onSubmit={(event) => {
           event.preventDefault();
           fetch("http://localhost:8000/api/users", {

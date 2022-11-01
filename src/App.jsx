@@ -1,5 +1,5 @@
-import { Login } from "./pages/Login.jsx";
+import { SignUp } from "./pages/SignUp.jsx";
 
 export function App() {
-  return <Login />;
+  return <SignUp />;
 }
