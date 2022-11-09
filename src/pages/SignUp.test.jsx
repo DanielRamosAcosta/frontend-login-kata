@@ -3,16 +3,10 @@ import { SignUp } from "./SignUp.jsx";
 import { screen } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { AuthService } from "../services/AuthService.jsx";
-
-class AuthServiceFake extends AuthService {
-  async login(email, password) {
-    return { status: "ok" };
-  }
-}
+import { AuthServiceFake } from "../services/AuthServiceFake.jsx";
 
 describe("signup", () => {
-  it("works", async () => {
+  it("shows a success message when signup is ok", async () => {
     const authService = new AuthServiceFake();
 
     const user = userEvent.setup();

@@ -6,6 +6,12 @@ import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
 
+/**
+ * SignUp component
+ * @param {AuthService} authService
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const SignUp = ({ authService }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +30,7 @@ export const SignUp = ({ authService }) => {
           event.preventDefault();
 
           authService
-            .login(email, password)
+            .signup(email, password)
             .then(() => {
               setSignUpSuccess(true);
             })
