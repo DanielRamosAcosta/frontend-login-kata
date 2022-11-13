@@ -1,6 +1,4 @@
-import { AuthServiceApi } from "./AuthServiceApi.js";
-
-export class AuthService extends AuthServiceApi {
+export class AuthService {
   signUp(email, password) {
     throw new Error("Unimplemented");
   }

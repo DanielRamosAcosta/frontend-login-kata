@@ -1,4 +1,4 @@
-import { createDependencies } from "./CreateDependencies.jsx";
+import { createDependencies } from "./CreateDependencies.js";
 import { AuthServiceFake } from "../services/AuthServiceFake.js";
 import { RouterServiceFake } from "../services/RouterServiceFake.js";
 

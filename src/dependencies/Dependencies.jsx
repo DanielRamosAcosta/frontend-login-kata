@@ -1,6 +1,6 @@
 import { createContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { createDependenciesReal } from "../factories/CreateDependenciesReal.jsx";
+import { createDependenciesReal } from "../factories/CreateDependenciesReal.js";
 
 export const Dependencies = createContext(null);
 

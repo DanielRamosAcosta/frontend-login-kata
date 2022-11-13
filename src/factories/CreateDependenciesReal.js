@@ -1,4 +1,4 @@
-import { createDependencies } from "./CreateDependencies.jsx";
+import { createDependencies } from "./CreateDependencies.js";
 import { AuthServiceApi } from "../services/AuthServiceApi.js";
 import { RouterServiceReactRouter } from "../services/RouterServiceReactRouter.js";
 

@@ -4,7 +4,7 @@ import { screen } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Dependencies } from "../dependencies/Dependencies.jsx";
-import { createDependenciesFake } from "../factories/CreateDependenciesFake.jsx";
+import { createDependenciesFake } from "../factories/CreateDependenciesFake.js";
 
 describe("signup", () => {
   it("redirects to the success page when signup is ok", async () => {
