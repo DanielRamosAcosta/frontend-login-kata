@@ -5,18 +5,13 @@ import { PasswordField } from "../components/PasswordField.jsx";
 import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
+import { useDependencies } from "../hooks/UseDependencies.jsx";
 
-/**
- * SignUp component
- * @param {AuthService} authService
- * @returns {JSX.Element}
- * @constructor
- */
-export const SignUp = ({ authService }) => {
+export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const { authService, routerService } = useDependencies();
 
   useEffect(() => {
     setErrorMessage(null);
@@ -30,9 +25,9 @@ export const SignUp = ({ authService }) => {
           event.preventDefault();
 
           authService
-            .signup(email, password)
+            .signUp(email, password)
             .then(() => {
-              setSignUpSuccess(true);
+              routerService.navigateToSignUpSuccess();
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -42,25 +37,20 @@ export const SignUp = ({ authService }) => {
         <Title>Sign up with email</Title>
         <p>Enter your email address to create an account.</p>
 
-        {signUpSuccess && <p>You have successfully been registered</p>}
-        {!signUpSuccess && (
-          <>
-            <EmailField
-              id="email"
-              labelText="Your email"
-              value={email}
-              onChange={setEmail}
-            />
-            <PasswordField
-              id="password"
-              labelText="Your password"
-              value={password}
-              onChange={setPassword}
-            />
-            {errorMessage && <p>{translateError(errorMessage)}</p>}
-            <Button title="Signup" />
-          </>
-        )}
+        <EmailField
+          id="email"
+          labelText="Your email"
+          value={email}
+          onChange={setEmail}
+        />
+        <PasswordField
+          id="password"
+          labelText="Your password"
+          value={password}
+          onChange={setPassword}
+        />
+        {errorMessage && <p>{translateError(errorMessage)}</p>}
+        <Button title="Signup" />
       </form>
     </main>
   );

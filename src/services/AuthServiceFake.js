@@ -1,7 +1,7 @@
-import { AuthService } from "./AuthService.jsx";
+import { AuthService } from "./AuthService.js";
 
 export class AuthServiceFake extends AuthService {
-  async signup(email, password) {
+  async signUp(email, password) {
     return { status: "ok" };
   }
 }

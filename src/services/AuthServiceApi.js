@@ -1,6 +1,6 @@
 export class AuthServiceApi {
-  signup(email, password) {
-    return fetch("http://localhost:8000/api/users", {
+  signUp(email, password) {
+    return fetch("https://backend-login-placeholder.deno.dev/api/users", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: {

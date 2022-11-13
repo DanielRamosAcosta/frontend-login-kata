@@ -1,16 +1,23 @@
-import { describe, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { SignUp } from "./SignUp.jsx";
 import { screen } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { AuthServiceFake } from "../services/AuthServiceFake.jsx";
+import { Dependencies } from "../dependencies/Dependencies.jsx";
+import { createDependenciesFake } from "../factories/CreateDependenciesFake.jsx";
 
 describe("signup", () => {
-  it("shows a success message when signup is ok", async () => {
-    const authService = new AuthServiceFake();
+  it("redirects to the success page when signup is ok", async () => {
+    const dependencies = createDependenciesFake();
+
+    vi.spyOn(dependencies.routerService, "navigateToSignUpSuccess");
 
     const user = userEvent.setup();
-    render(<SignUp authService={authService} />);
+    render(
+      <Dependencies.Provider value={dependencies}>
+        <SignUp />
+      </Dependencies.Provider>
+    );
 
     await user.click(screen.getByLabelText("Your email"));
     await user.keyboard("prueba@gmail.com");
@@ -20,6 +27,8 @@ describe("signup", () => {
 
     await user.click(screen.getByText("Signup"));
 
-    await screen.findByText("You have successfully been registered");
+    expect(
+      dependencies.routerService.navigateToSignUpSuccess
+    ).toHaveBeenCalled();
   });
 });
