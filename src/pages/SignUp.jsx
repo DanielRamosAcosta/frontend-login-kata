@@ -6,7 +6,7 @@ import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
 
-export const SignUp = ({ authService, routerService }) => {
+export const SignUp = ({ routerService }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -22,8 +22,19 @@ export const SignUp = ({ authService, routerService }) => {
         onSubmit={(event) => {
           event.preventDefault();
 
-          authService
-            .signUp(email, password)
+          fetch("https://backend-login-placeholder.deno.dev/api/users", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === "error") {
+                throw new Error(data.code);
+              }
+            })
             .then(() => {
               routerService.navigateToSignUpSuccess();
             })
