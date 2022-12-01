@@ -2,11 +2,13 @@ import React from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { SignUp } from "../pages/SignUp.jsx";
 import { SignUpSuccess } from "../pages/SignUpSuccess.jsx";
-import { createDependenciesReal } from "../factories/CreateDependenciesReal.js";
+import { AuthServiceApi } from "../services/AuthServiceApi.js";
+import { RouterServiceReactRouter } from "../services/RouterServiceReactRouter.js";
 
 export const AppRoutes = () => {
   const navigate = useNavigate();
-  const { authService, routerService } = createDependenciesReal({ navigate });
+  const authService = new AuthServiceApi();
+  const routerService = new RouterServiceReactRouter(navigate);
 
   return (
     <Routes>

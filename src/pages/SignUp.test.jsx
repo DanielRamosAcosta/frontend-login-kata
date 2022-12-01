@@ -1,13 +1,15 @@
 import { describe, expect, it, vi } from "vitest";
-import { SignUp } from "./SignUp.jsx";
 import { screen } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createDependenciesFake } from "../factories/CreateDependenciesFake.js";
+import { SignUp } from "./SignUp.jsx";
+import { AuthServiceFake } from "../services/AuthServiceFake.js";
+import { RouterServiceFake } from "../services/RouterServiceFake.js";
 
 describe("signup", () => {
   it("redirects to the success page when signup is ok", async () => {
-    const { authService, routerService } = createDependenciesFake();
+    const authService = new AuthServiceFake();
+    const routerService = new RouterServiceFake();
 
     vi.spyOn(routerService, "navigateToSignUpSuccess");
 
