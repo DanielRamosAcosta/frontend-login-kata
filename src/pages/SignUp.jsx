@@ -5,13 +5,11 @@ import { PasswordField } from "../components/PasswordField.jsx";
 import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
-import { useDependencies } from "../hooks/UseDependencies.jsx";
 
-export const SignUp = () => {
+export const SignUp = ({ authService, routerService }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const { authService, routerService } = useDependencies();
 
   useEffect(() => {
     setErrorMessage(null);
