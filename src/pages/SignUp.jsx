@@ -5,8 +5,10 @@ import { PasswordField } from "../components/PasswordField.jsx";
 import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
+import { useNavigate } from "react-router-dom";
 
-export const SignUp = ({ routerService }) => {
+export const SignUp = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -36,7 +38,7 @@ export const SignUp = ({ routerService }) => {
               }
             })
             .then(() => {
-              routerService.navigateToSignUpSuccess();
+              navigate("/success");
             })
             .catch((error) => {
               setErrorMessage(error.message);
