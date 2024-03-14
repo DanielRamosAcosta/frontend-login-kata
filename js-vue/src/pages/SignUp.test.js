@@ -28,7 +28,7 @@ describe("signup", () => {
     await user.click(screen.getByText("Signup"));
 
     await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith("/success");
+      expect(push).toHaveBeenCalledWith("/success");
     });
   });
 });
