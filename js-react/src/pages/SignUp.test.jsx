@@ -18,7 +18,7 @@ describe("signup", () => {
     await user.keyboard("prueba@gmail.com");
 
     await user.click(screen.getByLabelText("Your password"));
-    await user.keyboard("mySuperPassword");
+    await user.keyboard("1");
 
     await user.click(screen.getByText("Signup"));
 
