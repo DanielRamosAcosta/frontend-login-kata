@@ -3,7 +3,7 @@ import { describe, it } from "vitest";
 import { screen, waitFor } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { AppRoutes } from "../navigation/AppRoutes.jsx";
+import { AppRoutes } from "../navigation/AppRoutes.js";
 
 describe("signup", () => {
   it("redirects to the success page when signup is ok", async () => {
