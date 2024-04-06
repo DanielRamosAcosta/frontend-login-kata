@@ -10,6 +10,7 @@
     "test": "vitest",
     "test:e2e:install": "playwright install --with-deps",
     "test:e2e": "playwright test",
+    "lint": "eslint . --ext .js,.jsx --max-warnings 0",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write ."
   },
@@ -27,6 +28,10 @@
     "@types/react": "18.2.74",
     "@types/react-dom": "18.2.24",
     "@vitejs/plugin-react": "4.2.1",
+    "eslint": "8.57.0",
+    "eslint-plugin-react": "7.34.1",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-react-refresh": "0.4.6",
     "jsdom": "24.0.0",
     "prettier": "3.2.5",
     "vite": "5.2.8",
