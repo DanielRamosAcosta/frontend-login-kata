@@ -12,13 +12,14 @@ defaults:
 
 jobs:
   build:
-    timeout-minutes: 10
+    timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm ci
-      - run: npm run build --if-present
+      - run: npm run format:check
+      - run: npm run build
       - run: npm test
-      - run: npx playwright install --with-deps
-      - run: npx playwright test
+      - run: npm test:e2e:install
+      - run: npm test:e2e
