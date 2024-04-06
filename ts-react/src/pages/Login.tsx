@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./SignUp.css";
+import "./Login.css";
 import { EmailField } from "../components/EmailField.jsx";
 import { PasswordField } from "../components/PasswordField.jsx";
 import { Title } from "../components/Title";
@@ -7,7 +7,7 @@ import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
 import { useNavigate } from "react-router-dom";
 
-export const SignUp = () => {
+export const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,9 +18,9 @@ export const SignUp = () => {
   }, [email, password]);
 
   return (
-    <main className="signup-container">
+    <main className="login-container">
       <form
-        className="signup-form"
+        className="login-form"
         onSubmit={(event) => {
           event.preventDefault();
 
