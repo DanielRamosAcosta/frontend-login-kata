@@ -1,5 +1,5 @@
 <template>
-  <button class="button-container">{{ title }}</button>
+  <button class="button-container" :disabled="disabled">{{ title }}</button>
 </template>
 
 <script setup>
@@ -7,6 +7,10 @@ defineProps({
   title: {
     type: String,
     required: true,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>
@@ -18,5 +22,9 @@ defineProps({
   color: white;
   border: 0;
   border-radius: 20px;
+}
+
+.button-container:disabled {
+  background-color: #b7b7b7;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <main class="signup-container">
-    <form class="signup-form" @submit.prevent="onSubmit">
-      <Title>Sign up with email</Title>
+  <main class="login-container">
+    <form class="login-form" @submit.prevent="onSubmit">
+      <Title>Login with email</Title>
       <p>Enter your email address to create an account.</p>
 
       <EmailField id="email" label-text="Your email" v-model="email" />
@@ -11,7 +11,7 @@
         v-model="password"
       />
       <p v-if="errorMessage">{{ translateError(errorMessage) }}</p>
-      <Button title="Signup" />
+      <Button title="Login" :disabled="isLoading" />
     </form>
   </main>
 </template>
@@ -30,9 +30,13 @@ const router = useRouter();
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
+const isLoading = ref(false);
 
 function onSubmit() {
-  fetch("https://backend-login-placeholder.deno.dev/api/users", {
+  isLoading.value = true;
+  errorMessage.value = "";
+
+  fetch("https://backend-login-placeholder.deno.dev/api/users/login", {
     method: "POST",
     body: JSON.stringify({ email: email.value, password: password.value }),
     headers: {
@@ -44,24 +48,31 @@ function onSubmit() {
       if (data.status === "error") {
         throw new Error(data.code);
       }
+      return data.payload;
+    })
+    .then((payload) => {
+      localStorage.setItem("token", payload.jwt);
     })
     .then(() => {
-      router.push("/success");
+      router.push("/recipes");
     })
     .catch((error) => {
       errorMessage.value = error.message;
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
 }
 </script>
 
 <style scoped>
-.signup-container {
+.login-container {
   display: flex;
   justify-content: center;
   margin-top: 64px;
 }
 
-.signup-form {
+.login-form {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -70,7 +81,7 @@ function onSubmit() {
 }
 
 @media (min-width: 801px) {
-  .signup-form {
+  .login-form {
     box-shadow: rgb(0 0 0 / 15%) 0 2px 10px;
     padding: 64px;
   }

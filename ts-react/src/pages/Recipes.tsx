@@ -1,7 +1,7 @@
-import { Title } from "../components/Title";
-import "./Recipes.css";
 import { useEffect, useState } from "react";
+import { Title } from "../components/Title";
 import { RecipeCard } from "../components/RecipeCard";
+import "./Recipes.css";
 
 type Recipe = {
   id: string;
