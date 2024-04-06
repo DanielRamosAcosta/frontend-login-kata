@@ -30,8 +30,6 @@ export const Recipes = () => {
       });
   }, []);
 
-  console.log(recipes);
-
   return (
     <main className="recipes-page">
       <Title>Recipes</Title>
