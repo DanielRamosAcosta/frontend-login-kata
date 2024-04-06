@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./SignUp.css";
+import "./Login.css";
 import { EmailField } from "../components/EmailField.jsx";
 import { PasswordField } from "../components/PasswordField.jsx";
 import { Title } from "../components/Title";
@@ -7,24 +7,27 @@ import { Button } from "../components/Button";
 import { translateError } from "../utils/translateError.js";
 import { useNavigate } from "react-router-dom";
 
-export const SignUp = () => {
+export const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setErrorMessage(null);
   }, [email, password]);
 
   return (
-    <main className="signup-container">
+    <main className="login-container">
       <form
-        className="signup-form"
+        className="login-form"
         onSubmit={(event) => {
           event.preventDefault();
+          setIsLoading(true);
+          setErrorMessage(null);
 
-          fetch("https://backend-login-placeholder.deno.dev/api/users", {
+          fetch("https://backend-login-placeholder.deno.dev/api/users/login", {
             method: "POST",
             body: JSON.stringify({ email, password }),
             headers: {
@@ -36,17 +39,24 @@ export const SignUp = () => {
               if (data.status === "error") {
                 throw new Error(data.code);
               }
+              return data.payload;
+            })
+            .then((payload) => {
+              localStorage.setItem("token", payload.jwt);
             })
             .then(() => {
-              navigate("/success");
+              navigate("/recipes");
             })
             .catch((error) => {
               setErrorMessage(error.message);
+            })
+            .finally(() => {
+              setIsLoading(false);
             });
         }}
       >
-        <Title>Sign up with email</Title>
-        <p>Enter your email address to create an account.</p>
+        <Title>Login with email</Title>
+        <p>Enter your email address to login with your account.</p>
 
         <EmailField
           id="email"
@@ -61,7 +71,7 @@ export const SignUp = () => {
           onChange={setPassword}
         />
         {errorMessage && <p>{translateError(errorMessage)}</p>}
-        <Button title="Signup" />
+        <Button title="Login" disabled={isLoading} />
       </form>
     </main>
   );

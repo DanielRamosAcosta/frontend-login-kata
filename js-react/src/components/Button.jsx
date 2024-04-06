@@ -1,5 +1,7 @@
 import "./Button.css";
 
-export const Button = ({ title }) => (
-  <button className="button-container">{title}</button>
+export const Button = ({ title, disabled = false }) => (
+  <button className="button-container" disabled={disabled}>
+    {title}
+  </button>
 );

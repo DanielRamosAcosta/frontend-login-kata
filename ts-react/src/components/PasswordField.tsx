@@ -1,5 +1,4 @@
 import "./PasswordField.css";
-import { VisibilityIcon } from "./icons/VisibilityIcon";
 import { VisibilityButton } from "./VisibilityButton";
 import { useState } from "react";
 

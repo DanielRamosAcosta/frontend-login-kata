@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { SignUp } from "../pages/SignUp.jsx";
-import { SignUpSuccess } from "../pages/SignUpSuccess.jsx";
+import { Login } from "../pages/Login.jsx";
+import { Recipes } from "../pages/Recipes.jsx";
 
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<SignUp />} />
-      <Route path="/success" element={<SignUpSuccess />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/recipes" element={<Recipes />} />
     </Routes>
   );
 };
