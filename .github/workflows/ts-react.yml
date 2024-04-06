@@ -1,0 +1,24 @@
+name: React in JS
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+defaults:
+  run:
+    working-directory: ./ts-react
+
+jobs:
+  build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm run build --if-present
+      - run: npm test
+      - run: npx playwright test
