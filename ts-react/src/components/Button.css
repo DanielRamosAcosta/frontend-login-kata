@@ -5,3 +5,7 @@
   border: 0;
   border-radius: 20px;
 }
+
+.button-container:disabled {
+  background-color: #b7b7b7;
+}

@@ -12,6 +12,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setErrorMessage(null);
@@ -23,6 +24,8 @@ export const Login = () => {
         className="login-form"
         onSubmit={(event) => {
           event.preventDefault();
+          setIsLoading(true);
+          setErrorMessage(null);
 
           fetch("https://backend-login-placeholder.deno.dev/api/users/login", {
             method: "POST",
@@ -46,6 +49,9 @@ export const Login = () => {
             })
             .catch((error) => {
               setErrorMessage(error.message);
+            })
+            .finally(() => {
+              setIsLoading(false);
             });
         }}
       >
@@ -65,7 +71,7 @@ export const Login = () => {
           onChange={setPassword}
         />
         {errorMessage && <p>{translateError(errorMessage)}</p>}
-        <Button title="Login" />
+        <Button title="Login" disabled={isLoading} />
       </form>
     </main>
   );
