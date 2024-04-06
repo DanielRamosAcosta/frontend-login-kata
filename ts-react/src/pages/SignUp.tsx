@@ -24,7 +24,7 @@ export const SignUp = () => {
         onSubmit={(event) => {
           event.preventDefault();
 
-          fetch("https://backend-login-placeholder.deno.dev/api/users", {
+          fetch("https://backend-login-placeholder.deno.dev/api/users/login", {
             method: "POST",
             body: JSON.stringify({ email, password }),
             headers: {
@@ -36,9 +36,13 @@ export const SignUp = () => {
               if (data.status === "error") {
                 throw new Error(data.code);
               }
+              return data.payload
+            })
+            .then((payload) => {
+              localStorage.setItem("token", payload.jwt);
             })
             .then(() => {
-              navigate("/success");
+              navigate("/recipes");
             })
             .catch((error) => {
               setErrorMessage(error.message);
