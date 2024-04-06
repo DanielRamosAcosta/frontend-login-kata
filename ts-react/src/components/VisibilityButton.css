@@ -1,0 +1,9 @@
+.visibility-button {
+  background-color: transparent;
+  display: flex;
+  height: 36px;
+  width: 36px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}

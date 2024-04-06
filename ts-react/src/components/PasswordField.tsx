@@ -1,4 +1,7 @@
 import "./PasswordField.css";
+import { VisibilityIcon } from "./icons/VisibilityIcon";
+import { VisibilityButton } from "./VisibilityButton";
+import { useState } from "react";
 
 type PasswordFieldProps = {
   id: string;
@@ -13,15 +16,23 @@ export const PasswordField = ({
   value,
   onChange,
 }: PasswordFieldProps) => {
+  const [passwordIsVisible, setPasswordIsVisible] = useState(false);
+
   return (
     <div className="password-field-container">
       <label htmlFor={id}>{labelText}</label>
-      <input
-        id={id}
-        type="password"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      ></input>
+      <div>
+        <input
+          id={id}
+          type={passwordIsVisible ? "text" : "password"}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+        ></input>
+        <VisibilityButton
+          isVisible={passwordIsVisible}
+          setIsVisible={setPasswordIsVisible}
+        />
+      </div>
     </div>
   );
 };

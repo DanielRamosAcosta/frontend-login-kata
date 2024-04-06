@@ -36,7 +36,7 @@ export const SignUp = () => {
               if (data.status === "error") {
                 throw new Error(data.code);
               }
-              return data.payload
+              return data.payload;
             })
             .then((payload) => {
               localStorage.setItem("token", payload.jwt);
@@ -49,8 +49,8 @@ export const SignUp = () => {
             });
         }}
       >
-        <Title>Sign up with email</Title>
-        <p>Enter your email address to create an account.</p>
+        <Title>Login with email</Title>
+        <p>Enter your email address to login with your account.</p>
 
         <EmailField
           id="email"
@@ -65,7 +65,7 @@ export const SignUp = () => {
           onChange={setPassword}
         />
         {errorMessage && <p>{translateError(errorMessage)}</p>}
-        <Button title="Signup" />
+        <Button title="Login" />
       </form>
     </main>
   );
