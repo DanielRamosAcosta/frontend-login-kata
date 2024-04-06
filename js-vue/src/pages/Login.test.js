@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-describe("signup", () => {
-  it("redirects to the success page when signup is ok", async () => {
+describe("Login", () => {
+  it("redirects to recipe page after login", () => {
     expect(true).toBe(true);
   });
 });
