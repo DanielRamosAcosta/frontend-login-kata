@@ -1,4 +1,4 @@
-name: Vue in JS
+name: React in JS
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./js-vue
+    working-directory: ./react-js
 
 jobs:
   build:
@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
       - run: npm ci
       - run: npm run format:check
+      - run: npm run lint
       - run: npm run build
       - run: npm test
       - run: npm run test:e2e:install

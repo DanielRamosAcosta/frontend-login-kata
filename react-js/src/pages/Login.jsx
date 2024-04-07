@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import "./Login.css";
 import { EmailField } from "../components/EmailField.jsx";
 import { PasswordField } from "../components/PasswordField.jsx";
-import { Title } from "../components/Title";
-import { Button } from "../components/Button";
+import { Title } from "../components/Title.jsx";
+import { Button } from "../components/Button.jsx";
 import { translateError } from "../utils/translateError.js";
 import { useNavigate } from "react-router-dom";
 

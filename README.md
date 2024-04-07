@@ -1,8 +1,8 @@
 # Frontend Login Kata
 
-![](https://github.com/DanielRamosAcosta/frontend-login-kata/actions/workflows/ts-react.yml/badge.svg)
-![](https://github.com/DanielRamosAcosta/frontend-login-kata/actions/workflows/js-react.yml/badge.svg)
-![](https://github.com/DanielRamosAcosta/frontend-login-kata/actions/workflows/js-vue.yml/badge.svg)
+![](https://github.com/DanielRamosAcosta/frontend-login-kata/actions/workflows/react-js.yml/badge.svg)
+![](https://github.com/DanielRamosAcosta/frontend-login-kata/actions/workflows/react-ts.yml/badge.svg)
+![](https://github.com/DanielRamosAcosta/frontend-login-kata/actions/workflows/vue-js.yml/badge.svg)
 
 Things to train:
 
