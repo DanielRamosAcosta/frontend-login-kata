@@ -11,6 +11,8 @@ import { navigationServiceReactRouterProvider2 } from "../stuff/NavigationServic
 import { tokenRepositoryLocalStorageProvider2 } from "../stuff/TokenRepositoryLocalStorageProvider.ts";
 import { authServiceProvider } from "../stuff/AuthServiceFetchProvider.ts";
 import { loginUseCaseProvider2 } from "../stuff/LoginUseCaseProvider.ts";
+import { RecipeRepository } from "../stuff/RecipeRepository.ts";
+import { recipeRepositoryProvider } from "../stuff/RecipeRepositoryProvider.ts";
 
 export const AppRoutes = () => {
   const navigate = useNavigate();
@@ -34,6 +36,10 @@ export const AppRoutes = () => {
   container
     .bind<LoginUseCase>("LoginUseCase")
     .toDynamicValue(loginUseCaseProvider2);
+
+  container
+    .bind<RecipeRepository>("RecipeRepository")
+    .toDynamicValue(recipeRepositoryProvider);
 
   return (
     <DependenciesContext.Provider value={container}>

@@ -2,29 +2,18 @@ import { useEffect, useState } from "react";
 import { Title } from "../components/Title";
 import { RecipeCard } from "../components/RecipeCard";
 import "./Recipes.css";
-
-type Recipe = {
-  id: string;
-  name: string;
-  ingredients: string[];
-};
+import { Recipe } from "../domain/Recipe.ts";
+import { useDependencies } from "../injection/DependenciesContext.ts";
+import { RecipeRepository } from "../stuff/RecipeRepository.ts";
 
 export const Recipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const container = useDependencies();
 
   useEffect(() => {
-    fetch("https://backend-login-placeholder.deno.dev/api/recepies", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "error") {
-          throw new Error(data.code);
-        }
-        return data.payload;
-      })
+    container
+      .getAsync<RecipeRepository>("RecipeRepository")
+      .then((recipeRepository) => recipeRepository.getRecipes())
       .then((recipes) => {
         setRecipes(recipes);
       });
