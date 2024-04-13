@@ -6,7 +6,7 @@ import { Title } from "../components/Title.js";
 import { Button } from "../components/Button.js";
 import { translateError } from "../utils/translateError.js";
 import { useDependencies } from "../injection/DependenciesContext.ts";
-import { LoginProvider } from "../stuff/LoginUseCase.ts";
+import { LoginUseCase } from "../stuff/LoginUseCase.ts";
 
 export const Login = () => {
   const container = useDependencies();
@@ -28,11 +28,8 @@ export const Login = () => {
           setIsLoading(true);
           setErrorMessage(null);
 
-          const loginUseCaseProvider = container.get<LoginProvider>(
-            "LoginUseCaseProvider",
-          );
-
-          loginUseCaseProvider()
+          container
+            .getAsync<LoginUseCase>("LoginUseCase")
             .then((login) => login(email, password))
             .catch((error) => {
               setErrorMessage(error.message);

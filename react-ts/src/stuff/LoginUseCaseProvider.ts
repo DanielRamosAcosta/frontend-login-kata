@@ -2,28 +2,17 @@ import { type AuthService } from "./AuthService.ts";
 import { type TokenRepository } from "./TokenRepository.ts";
 import { type NavigationService } from "./NavigationService.ts";
 import { type interfaces } from "inversify";
-import { type Provider } from "./Provider.ts";
 
-export const loginUseCaseProvider =
-  ({ container }: interfaces.Context) =>
-  async () => {
-    const authServiceProvider = container.get<Provider<AuthService>>(
-      "AuthServiceProvider",
-    );
-    const tokenRepositoryProvider = container.get<Provider<TokenRepository>>(
-      "TokenRepositoryProvider",
-    );
-    const navigationServiceProvider = container.get<
-      Provider<NavigationService>
-    >("NavigationServiceProvider");
+export const loginUseCaseProvider2 = async ({
+  container,
+}: interfaces.Context) => {
+  const [tokenRepository, authService, navigationService, loginUseCase] =
+    await Promise.all([
+      container.getAsync<TokenRepository>("TokenRepository"),
+      container.getAsync<AuthService>("AuthService"),
+      container.getAsync<NavigationService>("NavigationService"),
+      import("./LoginUseCase.ts").then((i) => i.loginUseCase),
+    ]);
 
-    const [authService, tokenRepository, navigation, { loginUseCase }] =
-      await Promise.all([
-        authServiceProvider(),
-        tokenRepositoryProvider(),
-        navigationServiceProvider(),
-        import("./LoginUseCase.ts"),
-      ]);
-
-    return loginUseCase(authService, tokenRepository, navigation);
-  };
+  return loginUseCase(authService, tokenRepository, navigationService);
+};

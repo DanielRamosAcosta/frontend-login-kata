@@ -1,4 +1,4 @@
-export const tokenRepositoryLocalStorageProvider = () => async () => {
+export const tokenRepositoryLocalStorageProvider2 = async () => {
   const { TokenRepositoryLocalStorage } = await import(
     "./TokenRepositoryLocalStorage"
   );

@@ -7,15 +7,10 @@ import { LoginUseCase } from "../stuff/LoginUseCase.ts";
 import { AuthService } from "../stuff/AuthService.ts";
 import { NavigationService } from "../stuff/NavigationService.ts";
 import { TokenRepository } from "../stuff/TokenRepository.ts";
-import { navigationServiceReactRouterProvider } from "../stuff/NavigationServiceReactRouterProvider.ts";
-import { tokenRepositoryLocalStorageProvider } from "../stuff/TokenRepositoryLocalStorageProvider.ts";
+import { navigationServiceReactRouterProvider2 } from "../stuff/NavigationServiceReactRouterProvider.ts";
+import { tokenRepositoryLocalStorageProvider2 } from "../stuff/TokenRepositoryLocalStorageProvider.ts";
 import { authServiceProvider } from "../stuff/AuthServiceFetchProvider.ts";
-import { loginUseCaseProvider } from "../stuff/LoginUseCaseProvider.ts";
-
-type AuthServiceProvider = () => Promise<AuthService>;
-type TokenRepositoryProvider = () => Promise<TokenRepository>;
-type NavigationServiceProvider = () => Promise<NavigationService>;
-type LoginUseCaseProvider = () => Promise<LoginUseCase>;
+import { loginUseCaseProvider2 } from "../stuff/LoginUseCaseProvider.ts";
 
 export const AppRoutes = () => {
   const navigate = useNavigate();
@@ -25,20 +20,20 @@ export const AppRoutes = () => {
   container.bind("ReactRouterNavigate").toConstantValue(navigate);
 
   container
-    .bind<AuthServiceProvider>("AuthServiceProvider")
-    .toProvider<AuthService>(authServiceProvider);
+    .bind<TokenRepository>("TokenRepository")
+    .toDynamicValue(tokenRepositoryLocalStorageProvider2);
 
   container
-    .bind<TokenRepositoryProvider>("TokenRepositoryProvider")
-    .toProvider<TokenRepository>(tokenRepositoryLocalStorageProvider);
+    .bind<AuthService>("AuthService")
+    .toDynamicValue(authServiceProvider);
 
   container
-    .bind<NavigationServiceProvider>("NavigationServiceProvider")
-    .toProvider<NavigationService>(navigationServiceReactRouterProvider);
+    .bind<NavigationService>("NavigationService")
+    .toDynamicValue(navigationServiceReactRouterProvider2);
 
   container
-    .bind<LoginUseCaseProvider>("LoginUseCaseProvider")
-    .toProvider<LoginUseCase>(loginUseCaseProvider);
+    .bind<LoginUseCase>("LoginUseCase")
+    .toDynamicValue(loginUseCaseProvider2);
 
   return (
     <DependenciesContext.Provider value={container}>
