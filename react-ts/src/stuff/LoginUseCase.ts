@@ -2,6 +2,8 @@ import { AuthService } from "./AuthService.ts";
 import { TokenRepository } from "./TokenRepository.ts";
 import { NavigationService } from "./NavigationService.ts";
 
+export const LOGIN_USE_CASE = Symbol("LoginUseCase");
+
 export const loginUseCase =
   (
     authService: AuthService,
@@ -17,3 +19,5 @@ export const loginUseCase =
   };
 
 export type LoginUseCase = ReturnType<typeof loginUseCase>;
+
+export type LoginProvider = () => Promise<LoginUseCase>;

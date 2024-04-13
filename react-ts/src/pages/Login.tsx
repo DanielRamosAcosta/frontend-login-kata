@@ -5,9 +5,11 @@ import { PasswordField } from "../components/PasswordField.js";
 import { Title } from "../components/Title.js";
 import { Button } from "../components/Button.js";
 import { translateError } from "../utils/translateError.js";
-import { LoginUseCase } from "../sutff/LoginUseCase.ts";
+import { useDependencies } from "../injection/DependenciesContext.ts";
+import { LoginProvider } from "../stuff/LoginUseCase.ts";
 
-export const Login = ({ login }: { login: LoginUseCase }) => {
+export const Login = () => {
+  const container = useDependencies();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -26,7 +28,12 @@ export const Login = ({ login }: { login: LoginUseCase }) => {
           setIsLoading(true);
           setErrorMessage(null);
 
-          login(email, password)
+          const loginUseCaseProvider = container.get<LoginProvider>(
+            "LoginUseCaseProvider",
+          );
+
+          loginUseCaseProvider()
+            .then((login) => login(email, password))
             .catch((error) => {
               setErrorMessage(error.message);
             })
