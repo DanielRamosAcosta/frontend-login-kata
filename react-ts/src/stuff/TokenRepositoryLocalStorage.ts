@@ -1,9 +1,10 @@
 import { TokenRepository } from "./TokenRepository.ts";
 
-const create = (): TokenRepository => ({
+export class TokenRepositoryLocalStorage implements TokenRepository {
   saveToken(jwt: string) {
     localStorage.setItem("token", jwt);
-  },
+  }
+
   getTokenOrFail(): string {
     const token = localStorage.getItem("token");
 
@@ -12,9 +13,5 @@ const create = (): TokenRepository => ({
     }
 
     return token;
-  },
-});
-
-export const TokenRepositoryLocalStorage = {
-  create,
-};
+  }
+}

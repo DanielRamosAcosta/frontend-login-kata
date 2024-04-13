@@ -10,6 +10,6 @@ export const RecipeRepositoryProvider = {
       import("./RecipeRepositoryFetch.ts").then((i) => i.RecipeRepositoryFetch),
     ]);
 
-    return RecipeRepositoryFetch.create(tokenRepository);
+    return new RecipeRepositoryFetch(tokenRepository);
   },
 };

@@ -1,7 +1,7 @@
 import { AuthService } from "./AuthService.ts";
 
-const create = (): AuthService => ({
-  login: async (email: string, password: string) => {
+export class AuthServiceFetch implements AuthService {
+  async login(email: string, password: string) {
     const response = await fetch(
       "https://backend-login-placeholder.deno.dev/api/users/login",
       {
@@ -20,7 +20,5 @@ const create = (): AuthService => ({
     }
 
     return data.payload;
-  },
-});
-
-export const AuthServiceFetch = { create };
+  }
+}

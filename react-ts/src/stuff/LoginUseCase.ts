@@ -2,18 +2,18 @@ import { AuthService } from "./AuthService.ts";
 import { TokenRepository } from "./TokenRepository.ts";
 import { NavigationService } from "./NavigationService.ts";
 
-export const loginUseCase =
-  (
-    authService: AuthService,
-    tokenRepository: TokenRepository,
-    navigation: NavigationService,
-  ) =>
-  async (email: string, password: string) => {
-    const payload = await authService.login(email, password);
+export class LoginUseCase {
+  constructor(
+    private authService: AuthService,
+    private tokenRepository: TokenRepository,
+    private navigation: NavigationService,
+  ) {}
 
-    tokenRepository.saveToken(payload.jwt);
+  async execute(email: string, password: string) {
+    const payload = await this.authService.login(email, password);
 
-    navigation.navigateToRecipes();
-  };
+    this.tokenRepository.saveToken(payload.jwt);
 
-export type LoginUseCase = ReturnType<typeof loginUseCase>;
+    this.navigation.navigateToRecipes();
+  }
+}

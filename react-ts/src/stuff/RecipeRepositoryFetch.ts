@@ -2,13 +2,15 @@ import { Recipe } from "../domain/Recipe.ts";
 import { RecipeRepository } from "./RecipeRepository.ts";
 import { TokenRepository } from "./TokenRepository.ts";
 
-const create = (tokenRepository: TokenRepository): RecipeRepository => ({
+export class RecipeRepositoryFetch implements RecipeRepository {
+  constructor(private readonly tokenRepository: TokenRepository) {}
+
   async getRecipes(): Promise<Recipe[]> {
     const response = await fetch(
       "https://backend-login-placeholder.deno.dev/api/recepies",
       {
         headers: {
-          Authorization: `Bearer ${tokenRepository.getTokenOrFail()}`,
+          Authorization: `Bearer ${this.tokenRepository.getTokenOrFail()}`,
         },
       },
     );
@@ -20,9 +22,5 @@ const create = (tokenRepository: TokenRepository): RecipeRepository => ({
     }
 
     return data.payload;
-  },
-});
-
-export const RecipeRepositoryFetch = {
-  create,
-};
+  }
+}

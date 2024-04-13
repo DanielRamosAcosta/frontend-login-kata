@@ -31,7 +31,7 @@ export const Login = () => {
 
           container
             .getAsync<LoginUseCase>(Token.LOGIN_USE_CASE)
-            .then((login) => login(email, password))
+            .then((login) => login.execute(email, password))
             .catch((error) => {
               setErrorMessage(error.message);
             })

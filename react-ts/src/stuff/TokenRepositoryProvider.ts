@@ -7,6 +7,6 @@ export const TokenRepositoryProvider = {
       "./TokenRepositoryLocalStorage"
     );
 
-    return TokenRepositoryLocalStorage.create();
+    return new TokenRepositoryLocalStorage();
   },
 };

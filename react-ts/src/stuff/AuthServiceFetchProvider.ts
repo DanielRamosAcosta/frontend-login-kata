@@ -5,6 +5,6 @@ export const AuthServiceProvider = {
   async useFactory() {
     const { AuthServiceFetch } = await import("./AuthServiceFetch.ts");
 
-    return AuthServiceFetch.create();
+    return new AuthServiceFetch();
   },
 };

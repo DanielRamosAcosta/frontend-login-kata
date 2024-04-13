@@ -1,8 +1,10 @@
 import { NavigateFunction } from "react-router-dom";
 import { NavigationService } from "./NavigationService.ts";
 
-export const create = (navigate: NavigateFunction): NavigationService => ({
-  navigateToRecipes: () => navigate("/recipes"),
-});
+export class NavigationServiceReactRouter implements NavigationService {
+  constructor(private navigate: NavigateFunction) {}
 
-export const NavigationServiceReactRouter = { create };
+  navigateToRecipes() {
+    this.navigate("/recipes");
+  }
+}

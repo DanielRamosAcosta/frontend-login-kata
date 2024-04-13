@@ -7,14 +7,14 @@ import { Token } from "./Token.ts";
 export const LoginUseCaseProvider = {
   token: Token.LOGIN_USE_CASE,
   async useFactory({ container }: interfaces.Context) {
-    const [tokenRepository, authService, navigationService, loginUseCase] =
+    const [tokenRepository, authService, navigationService, LoginUseCase] =
       await Promise.all([
         container.getAsync<TokenRepository>(Token.TOKEN_REPOSITORY),
         container.getAsync<AuthService>(Token.AUTH_SERVICE),
         container.getAsync<NavigationService>(Token.NAVIGATOR),
-        import("./LoginUseCase.ts").then((i) => i.loginUseCase),
+        import("./LoginUseCase.ts").then((i) => i.LoginUseCase),
       ]);
 
-    return loginUseCase(authService, tokenRepository, navigationService);
+    return new LoginUseCase(authService, tokenRepository, navigationService);
   },
 };
