@@ -5,6 +5,7 @@ import "./Recipes.css";
 import { Recipe } from "../domain/Recipe.ts";
 import { useDependencies } from "../injection/DependenciesContext.ts";
 import { RecipeRepository } from "../stuff/RecipeRepository.ts";
+import { Token } from "../stuff/Token.ts";
 
 export const Recipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -12,7 +13,7 @@ export const Recipes = () => {
 
   useEffect(() => {
     container
-      .getAsync<RecipeRepository>("RecipeRepository")
+      .getAsync<RecipeRepository>(Token.RECIPE_REPOSITORY)
       .then((recipeRepository) => recipeRepository.getRecipes())
       .then((recipes) => {
         setRecipes(recipes);

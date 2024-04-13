@@ -1,5 +1,10 @@
-export const authServiceProvider = async () => {
-  const { AuthServiceFetch } = await import("./AuthServiceFetch.ts");
+import { Token } from "./Token.ts";
 
-  return AuthServiceFetch.create();
+export const AuthServiceProvider = {
+  token: Token.AUTH_SERVICE,
+  async useFactory() {
+    const { AuthServiceFetch } = await import("./AuthServiceFetch.ts");
+
+    return AuthServiceFetch.create();
+  },
 };

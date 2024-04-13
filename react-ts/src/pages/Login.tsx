@@ -7,6 +7,7 @@ import { Button } from "../components/Button.js";
 import { translateError } from "../utils/translateError.js";
 import { useDependencies } from "../injection/DependenciesContext.ts";
 import { LoginUseCase } from "../stuff/LoginUseCase.ts";
+import { Token } from "../stuff/Token.ts";
 
 export const Login = () => {
   const container = useDependencies();
@@ -29,7 +30,7 @@ export const Login = () => {
           setErrorMessage(null);
 
           container
-            .getAsync<LoginUseCase>("LoginUseCase")
+            .getAsync<LoginUseCase>(Token.LOGIN_USE_CASE)
             .then((login) => login(email, password))
             .catch((error) => {
               setErrorMessage(error.message);
