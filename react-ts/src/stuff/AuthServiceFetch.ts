@@ -22,3 +22,4 @@ export class AuthServiceFetch implements AuthService {
     return data.payload;
   }
 }
+
