@@ -1,0 +1,14 @@
+.email-field-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.email-field-container label {
+  font-size: 14px;
+}
+
+.email-field-container input {
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #474747;
+}
