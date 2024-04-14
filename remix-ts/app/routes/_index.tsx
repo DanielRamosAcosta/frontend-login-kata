@@ -5,6 +5,8 @@ import {
   redirect,
 } from "@remix-run/node";
 import { getSession } from "~/sessions";
+import { useLoaderData } from "@remix-run/react";
+import { RecipeCard } from "~/components/RecipeCard";
 
 export const meta: MetaFunction = () => {
   return [
@@ -20,40 +22,38 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return redirect("/login");
   }
 
-  const data = { hello: "world" };
+  const response = await fetch(
+    "https://backend-login-placeholder.deno.dev/api/recepies",
+    {
+      headers: {
+        api_token:
+          "26df07b5b7318455b8ca09f923eaae6de6eb95530743eddcfdb541df9487df9d",
+      },
+    },
+  );
 
-  return json(data);
+  const data = await response.json();
+
+  if (data.status === "error") {
+    throw new Error(data.code);
+  }
+
+  return json({ recipes: data.payload });
 }
 
 export default function Index() {
+  const { recipes } = useLoaderData<typeof loader>();
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+      <h1>Recipes</h1>
+      {recipes.map((recipe: any) => (
+        <RecipeCard
+          name={recipe.name}
+          ingredients={recipe.ingredients}
+          key={recipe.id}
+        />
+      ))}
     </div>
   );
 }

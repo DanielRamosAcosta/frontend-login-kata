@@ -1,0 +1,16 @@
+.recipe-card {
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.recipe-card-ingredients {
+  font-size: 16px;
+}

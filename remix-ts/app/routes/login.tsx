@@ -2,7 +2,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node"; /
 import { json, redirect } from "@remix-run/node"; // or cloudflare/deno
 import { useLoaderData } from "@remix-run/react";
 
-import { getSession, commitSession } from "../sessions";
+import { getSession, commitSession } from "~/sessions";
 
 async function validateCredentials(
   username: FormDataEntryValue | null,
@@ -12,7 +12,7 @@ async function validateCredentials(
   // For this example, we'll just check if the username is "admin"
   // and the password is "password".
 
-  if (username === "admin" && password === "password") {
+  if (username === "linustorvalds@gmail.com" && password === "ilovecats") {
     return "1";
   }
 
@@ -76,12 +76,12 @@ export default function Login() {
           <p>Please sign in</p>
         </div>
         <label>
-          Username: <input type="text" name="username" />
+          Your email <input type="text" name="username" />
         </label>
         <label>
-          Password: <input type="password" name="password" />
+          Your password <input type="password" name="password" />
         </label>
-        <button type="submit">Sign in</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
