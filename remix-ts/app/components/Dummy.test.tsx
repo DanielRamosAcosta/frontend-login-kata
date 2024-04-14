@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/dom";
 import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { Dummy } from "./Dummy";
 
 describe("Dummy", () => {

@@ -6,11 +6,14 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
-    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint . --max-warnings 0",
     "start": "remix-serve ./build/server/index.js",
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "test": "vitest",
+    "test:e2e:install": "playwright install --with-deps",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@remix-run/node": "^2.8.1",
