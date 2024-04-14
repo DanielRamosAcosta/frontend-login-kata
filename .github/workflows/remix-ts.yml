@@ -1,0 +1,26 @@
+name: Remix in TS
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+defaults:
+  run:
+    working-directory: ./remix-ts
+
+jobs:
+  build:
+    timeout-minutes: 3
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+      - run: npm run test:e2e:install
+      - run: npm run test:e2e
