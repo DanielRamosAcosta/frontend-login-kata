@@ -1,4 +1,10 @@
-import type { MetaFunction } from "@remix-run/node";
+import {
+  json,
+  LoaderFunctionArgs,
+  MetaFunction,
+  redirect,
+} from "@remix-run/node";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   return [
@@ -6,6 +12,18 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  if (!session.has("userId")) {
+    return redirect("/login");
+  }
+
+  const data = { hello: "world" };
+
+  return json(data);
+}
 
 export default function Index() {
   return (
