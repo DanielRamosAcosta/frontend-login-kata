@@ -1,22 +1,39 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node"; // or cloudflare/deno
 import { json, redirect } from "@remix-run/node"; // or cloudflare/deno
 import { useLoaderData } from "@remix-run/react";
+import { commitSession, getSession } from "~/sessions";
+import { Title } from "~/components/Title";
+import { Button } from "~/components/Button";
+import { PasswordField } from "~/components/PasswordField";
+import { EmailField } from "~/components/EmailField";
 
-import { getSession, commitSession } from "~/sessions";
+import "~/styles/login.css";
+import { translateError } from "~/utils/translateError";
 
 async function validateCredentials(
-  username: FormDataEntryValue | null,
+  email: FormDataEntryValue | null,
   password: FormDataEntryValue | null,
-): Promise<string | null> {
-  // This is where you would validate the username and password.
-  // For this example, we'll just check if the username is "admin"
-  // and the password is "password".
+): Promise<string> {
+  const response = await fetch(
+    "https://backend-login-placeholder.deno.dev/api/users/login",
+    {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
 
-  if (username === "linustorvalds@gmail.com" && password === "ilovecats") {
-    return "1";
+  const data = await response.json();
+
+  if (data.status === "error") {
+    throw new Error(data.code);
   }
 
-  return null;
+  const jwt = data.payload.jwt;
+  const payload = atob(jwt.split(".")[1]);
+  return JSON.parse(payload).userId;
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -39,15 +56,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export async function action({ request }: ActionFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   const form = await request.formData();
-  const username = form.get("username");
+  const email = form.get("email");
   const password = form.get("password");
 
-  const userId = await validateCredentials(username, password);
+  let userId = "";
 
-  if (userId == null) {
-    session.flash("error", "Invalid username/password");
+  try {
+    userId = await validateCredentials(email, password);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      throw error;
+    }
 
-    // Redirect back to the login page with errors.
+    session.flash("error", error.message);
+
     return redirect("/login", {
       headers: {
         "Set-Cookie": await commitSession(session),
@@ -69,20 +91,16 @@ export default function Login() {
   const { error } = useLoaderData<typeof loader>();
 
   return (
-    <div>
-      {error ? <div className="error">{error}</div> : null}
-      <form method="POST">
-        <div>
-          <p>Please sign in</p>
-        </div>
-        <label>
-          Your email <input type="text" name="username" />
-        </label>
-        <label>
-          Your password <input type="password" name="password" />
-        </label>
-        <button type="submit">Login</button>
+    <main className="login-container">
+      <form method="POST" className="login-form">
+        <Title>Login with email</Title>
+        <p>Enter your email address to login with your account.</p>
+
+        <EmailField id="email" labelText="Your email" />
+        <PasswordField id="password" labelText="Your password" />
+        {error && <p>{translateError(error)}</p>}
+        <Button title="Login" />
       </form>
-    </div>
+    </main>
   );
 }

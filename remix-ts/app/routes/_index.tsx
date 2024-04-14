@@ -4,15 +4,22 @@ import {
   MetaFunction,
   redirect,
 } from "@remix-run/node";
-import { getSession } from "~/sessions";
 import { useLoaderData } from "@remix-run/react";
 import { RecipeCard } from "~/components/RecipeCard";
+import { Title } from "~/components/Title";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "New Remix App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
+};
+
+type Recipe = {
+  id: string;
+  name: string;
+  ingredients: string[];
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -38,7 +45,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw new Error(data.code);
   }
 
-  return json({ recipes: data.payload });
+  return json({ recipes: data.payload as Recipe[] });
 }
 
 export default function Index() {
@@ -46,8 +53,8 @@ export default function Index() {
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Recipes</h1>
-      {recipes.map((recipe: any) => (
+      <Title>Recipes</Title>
+      {recipes.map((recipe) => (
         <RecipeCard
           name={recipe.name}
           ingredients={recipe.ingredients}
