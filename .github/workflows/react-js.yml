@@ -5,6 +5,8 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+    paths:
+      - "react-js/**"
 
 defaults:
   run:
