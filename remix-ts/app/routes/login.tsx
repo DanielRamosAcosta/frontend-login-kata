@@ -96,7 +96,7 @@ export default function Login() {
         <Title>Login with email</Title>
         <p>Enter your email address to login with your account.</p>
 
-        <EmailField id="email" labelText="Your email" />
+        <EmailField id="email" labelText="hehe" />
         <PasswordField id="password" labelText="Your password" />
         {error && <p>{translateError(error)}</p>}
         <Button title="Login" />
