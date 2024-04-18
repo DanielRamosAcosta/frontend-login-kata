@@ -1,15 +1,20 @@
 <main class="login-container">
   <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
     <div>
-      <app-email-field id="email" label="Your email" formControlName="email" />
+      <app-email-field
+        identifier="fooo"
+        label="Your email"
+        formControlName="email"
+      />
     </div>
     <div>
       <app-password-field
-        id="password"
+        identifier="password"
         label="Your password"
         formControlName="password"
       />
     </div>
-    <button class="button-container">Log in</button>
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+    <button class="button-container">Login</button>
   </form>
 </main>

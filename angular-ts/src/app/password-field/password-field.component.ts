@@ -17,7 +17,7 @@ import { NgIf } from '@angular/common';
   ],
 })
 export class PasswordFieldComponent {
-  @Input() id!: string;
+  @Input() identifier!: string;
   @Input() label!: string;
   value = '';
   passwordIsVisible = false;

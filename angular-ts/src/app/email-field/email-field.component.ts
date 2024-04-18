@@ -16,7 +16,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class EmailFieldComponent implements ControlValueAccessor {
-  @Input() id!: string;
+  @Input() identifier!: string;
   @Input() label!: string;
   value = '';
   onChange!: (value: string) => void;

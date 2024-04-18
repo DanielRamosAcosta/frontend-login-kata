@@ -9,6 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { EmailFieldComponent } from '../email-field/email-field.component';
 import { PasswordFieldComponent } from '../password-field/password-field.component';
+import { NgIf } from '@angular/common';
+import { translateError } from '../utils/translateError';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +20,7 @@ import { PasswordFieldComponent } from '../password-field/password-field.compone
     EmailFieldComponent,
     ReactiveFormsModule,
     PasswordFieldComponent,
+    NgIf,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -66,7 +69,7 @@ export class LoginComponent implements OnInit {
         return this.router.navigateByUrl('/recipes');
       })
       .catch((error) => {
-        this.errorMessage = error.message;
+        this.errorMessage = translateError(error.message);
       })
       .finally(() => {
         this.isLoading = false;
