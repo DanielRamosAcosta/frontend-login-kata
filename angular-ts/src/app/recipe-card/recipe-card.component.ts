@@ -9,6 +9,6 @@ import { NgFor } from '@angular/common';
   imports: [NgFor],
 })
 export class RecipeCardComponent {
-  @Input() name: string = '';
-  @Input() ingredients: string[] = [];
+  @Input() name!: string;
+  @Input() ingredients!: string[];
 }
