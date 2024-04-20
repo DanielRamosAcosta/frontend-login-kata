@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+import { wrapWithBoundary } from "../errors/ErrorBoundary.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -6,7 +7,7 @@ const routes: RouteObject[] = [
     lazy: async () => {
       const { Login } = await import("../pages/Login.tsx");
 
-      return { Component: Login };
+      return { Component: wrapWithBoundary(Login) };
     },
   },
   {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./Login.css";
 import { EmailField } from "../components/EmailField.js";
 import { PasswordField } from "../components/PasswordField.js";
@@ -8,6 +8,20 @@ import { useDependencies } from "../injection/DependenciesContext.ts";
 import { LoginUseCase } from "../stuff/LoginUseCase.ts";
 import { Token } from "../stuff/Token.ts";
 import { useTranslation } from "../hooks/useTranslation.ts";
+import { DomainError } from "../errors/DomainError.ts";
+
+export const useAsyncError = () => {
+  const [, setError] = useState();
+  const useCallback1 = useCallback(
+    (e: any) => {
+      setError(() => {
+        throw e;
+      });
+    },
+    [setError],
+  );
+  return { propagateError: useCallback1 };
+};
 
 export const Login = () => {
   const container = useDependencies();
@@ -16,6 +30,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [errorCode, setErrorCode] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { propagateError } = useAsyncError();
 
   useEffect(() => {
     setErrorCode(null);
@@ -34,8 +49,12 @@ export const Login = () => {
             .getAsync<LoginUseCase>(Token.LOGIN_USE_CASE)
             .then((login) => login.execute(email, password))
             .catch((error) => {
-              setErrorCode(error.message);
+              if (error instanceof DomainError) {
+                setErrorCode(error.message);
+              }
+              throw error;
             })
+            .catch(propagateError)
             .finally(() => {
               setIsLoading(false);
             });
