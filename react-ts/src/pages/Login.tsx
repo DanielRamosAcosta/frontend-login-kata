@@ -4,20 +4,21 @@ import { EmailField } from "../components/EmailField.js";
 import { PasswordField } from "../components/PasswordField.js";
 import { Title } from "../components/Title.js";
 import { Button } from "../components/Button.js";
-import { translateError } from "../utils/translateError.js";
 import { useDependencies } from "../injection/DependenciesContext.ts";
 import { LoginUseCase } from "../stuff/LoginUseCase.ts";
 import { Token } from "../stuff/Token.ts";
+import { useTranslation } from "../hooks/useTranslation.ts";
 
 export const Login = () => {
   const container = useDependencies();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorCode, setErrorCode] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setErrorMessage(null);
+    setErrorCode(null);
   }, [email, password]);
 
   return (
@@ -27,36 +28,36 @@ export const Login = () => {
         onSubmit={(event) => {
           event.preventDefault();
           setIsLoading(true);
-          setErrorMessage(null);
+          setErrorCode(null);
 
           container
             .getAsync<LoginUseCase>(Token.LOGIN_USE_CASE)
             .then((login) => login.execute(email, password))
             .catch((error) => {
-              setErrorMessage(error.message);
+              setErrorCode(error.message);
             })
             .finally(() => {
               setIsLoading(false);
             });
         }}
       >
-        <Title>Login with email</Title>
-        <p>Enter your email address to login with your account.</p>
+        <Title>{t("login.title")}</Title>
+        <p>{t("login.subtitle")}</p>
 
         <EmailField
           id="email"
-          labelText="Your email"
+          labelText={t("login.email")}
           value={email}
           onChange={setEmail}
         />
         <PasswordField
           id="password"
-          labelText="Your password"
+          labelText={t("login.password")}
           value={password}
           onChange={setPassword}
         />
-        {errorMessage && <p>{translateError(errorMessage)}</p>}
-        <Button title="Login" disabled={isLoading} />
+        {errorCode && <p>{t(`errors.${errorCode}`)}</p>}
+        <Button title={t("login.login")} disabled={isLoading} />
       </form>
     </main>
   );

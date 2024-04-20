@@ -1,0 +1,18 @@
+{
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Introduce tu email para iniciar sesión con tu cuenta.",
+    "email": "Tu email",
+    "password": "Tu contraseña",
+    "login": "Iniciar sesión",
+    "hide_password": "Mostrar contraseña",
+    "show_password": "Ocultar contraseña"
+  },
+  "errors": {
+    "missing_password_field": "La contraseña es requerida",
+    "missing_email_field": "El email es requerido",
+    "password_too_short": "La contraseña es muy corta",
+    "email_already_exists": "El email ya está registrado",
+    "wrong_email_or_password": "Email o contraseña incorrectos"
+  }
+}

@@ -14,13 +14,13 @@ describe("Login", () => {
 
     vi.spyOn(authService, "login");
 
-    await user.click(screen.getByLabelText("Your email"));
+    await user.click(screen.getByLabelText("login.email"));
     await user.keyboard("prueba@gmail.com");
 
-    await user.click(screen.getByLabelText("Your password"));
+    await user.click(screen.getByLabelText("login.password"));
     await user.keyboard("mySuperPassword");
 
-    await user.click(screen.getByText("Login"));
+    await user.click(screen.getByText("login.login"));
 
     await waitFor(() => {
       expect(authService.login).toHaveBeenCalledWith(
@@ -35,13 +35,13 @@ describe("Login", () => {
 
     vi.spyOn(navigationService, "navigateToRecipes");
 
-    await user.click(screen.getByLabelText("Your email"));
+    await user.click(screen.getByLabelText("login.email"));
     await user.keyboard("prueba@gmail.com");
 
-    await user.click(screen.getByLabelText("Your password"));
+    await user.click(screen.getByLabelText("login.password"));
     await user.keyboard("mySuperPassword");
 
-    await user.click(screen.getByText("Login"));
+    await user.click(screen.getByText("login.login"));
 
     await waitFor(() => {
       expect(navigationService.navigateToRecipes).toHaveBeenCalled();
@@ -53,13 +53,13 @@ describe("Login", () => {
 
     vi.spyOn(tokenRepository, "saveToken");
 
-    await user.click(screen.getByLabelText("Your email"));
+    await user.click(screen.getByLabelText("login.email"));
     await user.keyboard("prueba@gmail.com");
 
-    await user.click(screen.getByLabelText("Your password"));
+    await user.click(screen.getByLabelText("login.password"));
     await user.keyboard("mySuperPassword");
 
-    await user.click(screen.getByText("Login"));
+    await user.click(screen.getByText("login.login"));
 
     await waitFor(() => {
       expect(tokenRepository.saveToken).toHaveBeenCalledWith(FAKE_JWT);
@@ -73,16 +73,18 @@ describe("Login", () => {
       throw new Error("wrong_email_or_password");
     });
 
-    await user.click(screen.getByLabelText("Your email"));
+    await user.click(screen.getByLabelText("login.email"));
     await user.keyboard("prueba@gmail.com");
 
-    await user.click(screen.getByLabelText("Your password"));
+    await user.click(screen.getByLabelText("login.password"));
     await user.keyboard("mySuperPassword");
 
-    await user.click(screen.getByText("Login"));
+    await user.click(screen.getByText("login.login"));
 
     await waitFor(() => {
-      expect(screen.getByText("Wrong email or password")).toBeInTheDocument();
+      expect(
+        screen.getByText("errors.wrong_email_or_password"),
+      ).toBeInTheDocument();
     });
   });
 });

@@ -1,23 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./i18n.ts";
 import "./reset.css";
 import "./main.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Token } from "./stuff/Token.ts";
-import { routes } from "./navigation/routes.ts";
-import { DependenciesContext } from "./injection/DependenciesContext.ts";
-import { createContainer } from "./injection/createContainer.ts";
-
-const router = createBrowserRouter(routes);
-
-const container = createContainer();
-
-container.bind(Token.REACT_ROUTER_NAVIGATE).toConstantValue(router.navigate);
+import { RouterProvider } from "react-router-dom";
+import { router } from "./navigation/routes.ts";
+import { DependenciesProvider } from "./injection/DependenciesProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <DependenciesContext.Provider value={container}>
+    <DependenciesProvider>
       <RouterProvider router={router} />
-    </DependenciesContext.Provider>
+    </DependenciesProvider>
   </React.StrictMode>,
 );

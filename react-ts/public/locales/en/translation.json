@@ -1,0 +1,18 @@
+{
+  "login": {
+    "title": "Login with email",
+    "subtitle": "Enter your email address to login with your account.",
+    "email": "Your email",
+    "password": "Your password",
+    "login": "Login",
+    "hide_password": "Hide password",
+    "show_password": "Show password"
+  },
+  "errors": {
+    "missing_password_field": "Password field is required",
+    "missing_email_field": "Email field is required",
+    "password_too_short": "The password is too short",
+    "email_already_exists": "Email already exists",
+    "wrong_email_or_password": "Wrong email or password"
+  }
+}
