@@ -51,6 +51,7 @@ export const Login = () => {
             .catch((error) => {
               if (error instanceof DomainError) {
                 setErrorCode(error.message);
+                return;
               }
               throw error;
             })

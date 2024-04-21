@@ -18,7 +18,6 @@ export const EmailField = ({
       <label htmlFor={id}>{labelText}</label>
       <input
         id={id}
-        type="email"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       ></input>

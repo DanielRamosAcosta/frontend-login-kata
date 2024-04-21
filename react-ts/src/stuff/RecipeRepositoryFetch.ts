@@ -10,7 +10,7 @@ export class RecipeRepositoryFetch implements RecipeRepository {
       "https://backend-login-placeholder.deno.dev/api/recepies",
       {
         headers: {
-          Authorization: `Bearer ${this.tokenRepository.getTokenOrFail()}`,
+          Authorization: `Bearer ${this.tokenRepository.getTokenOrFail() + 1}`,
         },
       },
     );

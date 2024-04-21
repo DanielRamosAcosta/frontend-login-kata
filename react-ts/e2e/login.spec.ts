@@ -1,7 +1,10 @@
-import { expect, test } from "@playwright/test";
+import { Browser, expect, test } from "@playwright/test";
 
 test.describe("login", () => {
   test("allows to login", async ({ page }) => {
+    const browserContext = page.context();
+    const browser = browserContext.browser() as Browser;
+
     await page.goto("/");
     await page.getByLabel("Your email").fill("linustorvalds@gmail.com");
     await page.getByLabel("Your password").fill("ilovecats");

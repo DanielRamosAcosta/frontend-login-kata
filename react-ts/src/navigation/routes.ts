@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+import * as Sentry from "@sentry/react";
 import { wrapWithBoundary } from "../errors/ErrorBoundary.tsx";
 
 const routes: RouteObject[] = [
@@ -20,4 +21,7 @@ const routes: RouteObject[] = [
   },
 ];
 
-export const router = createBrowserRouter(routes);
+const sentryCreateBrowserRouter =
+  Sentry.wrapCreateBrowserRouter(createBrowserRouter);
+
+export const router = sentryCreateBrowserRouter(routes);

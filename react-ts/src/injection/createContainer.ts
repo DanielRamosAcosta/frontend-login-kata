@@ -11,6 +11,9 @@ import { TokenRepository } from "../stuff/TokenRepository.ts";
 import { TranslationServiceProvider } from "../stuff/TranslationServiceProvider.ts";
 import { TranslationService } from "../stuff/TranslationService.ts";
 import DynamicValue = interfaces.DynamicValue;
+import { Token } from "../stuff/Token.ts";
+import { ErrorHandlerSentry } from "../stuff/ErrorHandlerSentry.ts";
+import { ErrorHandlerLog } from "../stuff/ErrorHandlerLog.ts";
 
 export function createContainer({
   authService = AuthServiceProvider.useFactory,
@@ -46,6 +49,15 @@ export function createContainer({
   container
     .bind(TranslationServiceProvider.token)
     .toDynamicValue(translationService);
+
+  console.log("import.meta.env.PROD", import.meta.env.PROD);
+  if (import.meta.env.PROD) {
+    container
+      .bind(Token.ERROR_HANDLER)
+      .toConstantValue(new ErrorHandlerSentry());
+  } else {
+    container.bind(Token.ERROR_HANDLER).toConstantValue(new ErrorHandlerLog());
+  }
 
   return container;
 }

@@ -1,6 +1,8 @@
-import React, { Component, useContext } from "react";
+import { Component, useContext, ReactNode } from "react";
 import { DependenciesContext } from "../injection/DependenciesContext.ts";
 import { Container } from "inversify";
+import { Token } from "../stuff/Token.ts";
+import { ErrorHandler } from "../stuff/ErrorHandler.ts";
 
 function debounce(fn: (error: Error) => void, delay: number) {
   let timeout: any;
@@ -13,16 +15,17 @@ function debounce(fn: (error: Error) => void, delay: number) {
   };
 }
 
-export class ErrorBoundary extends React.Component<{
-  children: React.ReactNode;
+export class ErrorBoundary extends Component<{
+  children: ReactNode;
   container: Container;
 }> {
   state = { error: null as Error | null };
 
   showError = debounce((error) => {
-    alert(error);
-    console.log(error);
-    console.log("PROPS2", this.props);
+    const errorHandler = this.props.container.get<ErrorHandler>(
+      Token.ERROR_HANDLER,
+    );
+    errorHandler.handle(error);
   }, 100);
 
   static getDerivedStateFromError(error: Error) {
@@ -30,9 +33,6 @@ export class ErrorBoundary extends React.Component<{
   }
 
   render() {
-    console.log("CONTEXT", this.context);
-    console.log("PROPS", this.props);
-
     if (this.state.error) {
       this.showError(this.state.error);
     }
