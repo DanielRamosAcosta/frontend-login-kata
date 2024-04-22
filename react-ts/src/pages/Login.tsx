@@ -5,13 +5,10 @@ import { PasswordField } from "../components/PasswordField.js";
 import { Title } from "../components/Title.js";
 import { Button } from "../components/Button.js";
 import { translateError } from "../utils/translateError.js";
-import { LoginUseCase } from "../use-cases/LoginUseCase.ts";
+import { useDependencies } from "../DependenciesContext.tsx";
 
-type LoginProps = {
-  loginUseCase: LoginUseCase;
-};
-
-export const Login = (props: LoginProps) => {
+export const Login = () => {
+  const { dependencies } = useDependencies();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -30,7 +27,7 @@ export const Login = (props: LoginProps) => {
           setIsLoading(true);
           setErrorMessage(null);
 
-          props.loginUseCase
+          dependencies.loginUseCase
             .execute(email, password)
             .catch((error) => {
               setErrorMessage(error.message);

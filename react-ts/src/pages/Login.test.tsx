@@ -7,6 +7,7 @@ import { LoginUseCase } from "../use-cases/LoginUseCase.ts";
 import { AuthService } from "../domain/AuthService.ts";
 import { TokenRepository } from "../domain/TokenRepository.ts";
 import { Router } from "../domain/Router.ts";
+import { DependenciesContext } from "../DependenciesContext.tsx";
 
 describe("Login", () => {
   it("redirects to recipe page after login", async () => {
@@ -21,7 +22,11 @@ describe("Login", () => {
     };
 
     const loginUseCase = new LoginUseCase(authService, tokenRepository, router);
-    render(<Login loginUseCase={loginUseCase} />);
+    render(
+      <DependenciesContext.Provider value={{ loginUseCase }}>
+        <Login />
+      </DependenciesContext.Provider>,
+    );
 
     await user.type(
       screen.getByLabelText("Your email"),
