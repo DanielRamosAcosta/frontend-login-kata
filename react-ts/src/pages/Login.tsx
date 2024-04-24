@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
+import { datadogRum } from "@datadog/browser-rum";
 import { EmailField } from "../components/EmailField.js";
 import { PasswordField } from "../components/PasswordField.js";
 import { Title } from "../components/Title.js";
@@ -30,6 +31,7 @@ export const Login = () => {
           dependencies.loginUseCase
             .execute(email, password)
             .catch((error) => {
+              datadogRum.addError(error);
               setErrorMessage(error.message);
             })
             .finally(() => {
