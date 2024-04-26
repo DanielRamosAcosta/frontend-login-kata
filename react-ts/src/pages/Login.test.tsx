@@ -7,6 +7,12 @@ import { DependenciesContext } from "../injection/DependenciesContext.ts";
 import userEvent from "@testing-library/user-event";
 import { createFakeContainer } from "../injection/createFakeContainer.ts";
 import { FAKE_JWT } from "../stuff/AuthServiceFake.ts";
+import { DomainError } from "../errors/DomainError.ts";
+import { ErrorBoundary } from "../errors/ErrorBoundary.tsx";
+import { Container } from "inversify";
+import { Token } from "../stuff/Token.ts";
+import { ErrorHandlerLog } from "../stuff/ErrorHandlerLog.ts";
+import { ErrorHandler } from "../stuff/ErrorHandler.ts";
 
 describe("Login", () => {
   it("sends the right params to the auth service", async () => {
@@ -70,7 +76,7 @@ describe("Login", () => {
     const { user, authService } = myRender(<Login />);
 
     vi.spyOn(authService, "login").mockImplementationOnce(async () => {
-      throw new Error("wrong_email_or_password");
+      throw new DomainError("wrong_email_or_password");
     });
 
     await user.click(screen.getByLabelText("login.email"));
@@ -85,6 +91,37 @@ describe("Login", () => {
       expect(
         screen.getByText("errors.wrong_email_or_password"),
       ).toBeInTheDocument();
+    });
+  });
+
+  it("elevates errors", async () => {
+    const container = new Container();
+
+    const errorHandler: ErrorHandler = {
+      handle: vi.fn(),
+    };
+
+    container.bind(Token.ERROR_HANDLER).toConstantValue(errorHandler);
+    const { user, authService } = myRender(
+      <ErrorBoundary container={container}>
+        <Login />
+      </ErrorBoundary>,
+    );
+
+    vi.spyOn(authService, "login").mockImplementationOnce(async () => {
+      throw new Error("unknown error");
+    });
+
+    await user.click(screen.getByLabelText("login.email"));
+    await user.keyboard("prueba@gmail.com");
+
+    await user.click(screen.getByLabelText("login.password"));
+    await user.keyboard("mySuperPassword");
+
+    await user.click(screen.getByText("login.login"));
+
+    await waitFor(() => {
+      expect(errorHandler).toHaveBeenCalled();
     });
   });
 });

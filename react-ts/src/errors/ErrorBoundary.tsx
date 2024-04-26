@@ -1,4 +1,4 @@
-import { Component, useContext, ReactNode } from "react";
+import React, { Component, useContext, ReactNode } from "react";
 import { DependenciesContext } from "../injection/DependenciesContext.ts";
 import { Container } from "inversify";
 import { Token } from "../stuff/Token.ts";
@@ -19,8 +19,6 @@ export class ErrorBoundary extends Component<{
   children: ReactNode;
   container: Container;
 }> {
-  state = { error: null as Error | null };
-
   showError = debounce((error) => {
     const errorHandler = this.props.container.get<ErrorHandler>(
       Token.ERROR_HANDLER,
@@ -28,15 +26,15 @@ export class ErrorBoundary extends Component<{
     errorHandler.handle(error);
   }, 100);
 
-  static getDerivedStateFromError(error: Error) {
-    return { error: error };
+  static getDerivedStateFromError() {
+    return {};
+  }
+
+  componentDidCatch(error: Error) {
+    this.showError(error);
   }
 
   render() {
-    if (this.state.error) {
-      this.showError(this.state.error);
-    }
-
     return this.props.children;
   }
 }
