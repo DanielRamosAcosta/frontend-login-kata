@@ -51,7 +51,7 @@ export function createContainer({
     .toDynamicValue(translationService);
 
   console.log("import.meta.env.PROD", import.meta.env.PROD);
-  if (false) {
+  if (import.meta.env.PROD) {
     container
       .bind(Token.ERROR_HANDLER)
       .toConstantValue(new ErrorHandlerSentry());

@@ -50,7 +50,7 @@ export const Login = () => {
             .then((login) => login.execute(email, password))
             .catch((error) => {
               if (error instanceof DomainError) {
-                setErrorCode(error.message);
+                setErrorCode(error.code);
                 return;
               }
               throw error;

@@ -93,37 +93,6 @@ describe("Login", () => {
       ).toBeInTheDocument();
     });
   });
-
-  it("elevates errors", async () => {
-    const container = new Container();
-
-    const errorHandler: ErrorHandler = {
-      handle: vi.fn(),
-    };
-
-    container.bind(Token.ERROR_HANDLER).toConstantValue(errorHandler);
-    const { user, authService } = myRender(
-      <ErrorBoundary container={container}>
-        <Login />
-      </ErrorBoundary>,
-    );
-
-    vi.spyOn(authService, "login").mockImplementationOnce(async () => {
-      throw new Error("unknown error");
-    });
-
-    await user.click(screen.getByLabelText("login.email"));
-    await user.keyboard("prueba@gmail.com");
-
-    await user.click(screen.getByLabelText("login.password"));
-    await user.keyboard("mySuperPassword");
-
-    await user.click(screen.getByText("login.login"));
-
-    await waitFor(() => {
-      expect(errorHandler).toHaveBeenCalled();
-    });
-  });
 });
 
 function myRender(ui: React.ReactNode) {

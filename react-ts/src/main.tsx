@@ -15,7 +15,7 @@ import { DependenciesProvider } from "./injection/DependenciesProvider.tsx";
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
-  enabled: import.meta.env.PROD,
+  enabled: true,
   dsn: "https://7fb5bd26a8795154b1565b01bf5d6fd3@o4507120577740800.ingest.de.sentry.io/4507120579903568",
   integrations: [
     Sentry.browserTracingIntegration(),
