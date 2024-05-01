@@ -4,12 +4,12 @@ import { NavigationServiceDummy } from "../stuff/NavigationServiceDummy.ts";
 import { RecipeRepositoryFake } from "../stuff/RecipeRepositoryFake.ts";
 import { TokenRepositoryFake } from "../stuff/TokenRepositoryFake.ts";
 
-export function createFakeContainer() {
-  const authService = new AuthServiceFake();
-  const navigationService = new NavigationServiceDummy();
-  const recipeRepository = new RecipeRepositoryFake();
-  const tokenRepository = new TokenRepositoryFake();
-
+export function createFakeContainer({
+  authService = new AuthServiceFake(),
+  navigationService = new NavigationServiceDummy(),
+  recipeRepository = new RecipeRepositoryFake(),
+  tokenRepository = new TokenRepositoryFake(),
+} = {}) {
   return {
     container: createContainer({
       authService: () => authService,

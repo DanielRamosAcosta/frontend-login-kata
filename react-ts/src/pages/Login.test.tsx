@@ -1,12 +1,8 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { screen, waitFor } from "@testing-library/dom";
-import { render } from "@testing-library/react";
 import { Login } from "./Login";
-import { DependenciesContext } from "../injection/DependenciesContext.ts";
-import userEvent from "@testing-library/user-event";
-import { createFakeContainer } from "../injection/createFakeContainer.ts";
-import { FAKE_JWT } from "../stuff/AuthServiceFake.ts";
+import { myRender } from "../../tests/MyRender.tsx";
 
 describe("Login", () => {
   it("sends the right params to the auth service", async () => {
@@ -51,8 +47,6 @@ describe("Login", () => {
   it("saves jwt in token repository", async () => {
     const { user, tokenRepository } = myRender(<Login />);
 
-    vi.spyOn(tokenRepository, "saveToken");
-
     await user.click(screen.getByLabelText("Your email"));
     await user.keyboard("prueba@gmail.com");
 
@@ -61,9 +55,7 @@ describe("Login", () => {
 
     await user.click(screen.getByText("Login"));
 
-    await waitFor(() => {
-      expect(tokenRepository.saveToken).toHaveBeenCalledWith(FAKE_JWT);
-    });
+    await tokenRepository.expectTokenToHaveBeenSaved();
   });
 
   it("displays error if authentication is wrong", async () => {
@@ -86,16 +78,3 @@ describe("Login", () => {
     });
   });
 });
-
-function myRender(ui: React.ReactNode) {
-  const user = userEvent.setup();
-  const { container, ...rest } = createFakeContainer();
-
-  render(
-    <DependenciesContext.Provider value={container}>
-      {ui}
-    </DependenciesContext.Provider>,
-  );
-
-  return { user, container, ...rest };
-}
