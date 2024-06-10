@@ -5,10 +5,12 @@ import { PasswordField } from "../components/PasswordField.js";
 import { Title } from "../components/Title.js";
 import { Button } from "../components/Button.js";
 import { translateError } from "../utils/translateError.js";
-import { useNavigate } from "react-router-dom";
 
-export const Login = () => {
-  const navigate = useNavigate();
+type LoginProps = {
+  navigate: (to: string) => void;
+};
+
+export const Login = ({ navigate }: LoginProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -27,6 +29,7 @@ export const Login = () => {
           setIsLoading(true);
           setErrorMessage(null);
 
+          console.log("lanzando request");
           fetch("https://backend-login-placeholder.deno.dev/api/users/login", {
             method: "POST",
             body: JSON.stringify({ email, password }),
@@ -36,6 +39,7 @@ export const Login = () => {
           })
             .then((response) => response.json())
             .then((data) => {
+              console.log("tengo response");
               if (data.status === "error") {
                 throw new Error(data.code);
               }
