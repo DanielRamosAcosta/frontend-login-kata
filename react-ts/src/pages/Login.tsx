@@ -5,12 +5,14 @@ import { PasswordField } from "../components/PasswordField.js";
 import { Title } from "../components/Title.js";
 import { Button } from "../components/Button.js";
 import { translateError } from "../utils/translateError.js";
+import { AuthService } from "../AuthService.ts";
 
 type LoginProps = {
   navigate: (to: string) => void;
+  authService: AuthService;
 };
 
-export const Login = ({ navigate }: LoginProps) => {
+export const Login = ({ navigate, authService }: LoginProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -29,24 +31,10 @@ export const Login = ({ navigate }: LoginProps) => {
           setIsLoading(true);
           setErrorMessage(null);
 
-          console.log("lanzando request");
-          fetch("https://backend-login-placeholder.deno.dev/api/users/login", {
-            method: "POST",
-            body: JSON.stringify({ email, password }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("tengo response");
-              if (data.status === "error") {
-                throw new Error(data.code);
-              }
-              return data.payload;
-            })
+          authService
+            .login(email, password)
             .then((payload) => {
-              localStorage.setItem("token", payload.jwt);
+              localStorage.setItem("token", payload);
             })
             .then(() => {
               navigate("/recipes");
