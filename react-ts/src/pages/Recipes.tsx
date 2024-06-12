@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Title } from "../components/Title";
 import { RecipeCard } from "../components/RecipeCard";
 import "./Recipes.css";
+import { TokenRepository } from "../services/TokenRepository.ts";
 
 type Recipe = {
   id: string;
@@ -9,13 +10,17 @@ type Recipe = {
   ingredients: string[];
 };
 
-export const Recipes = () => {
+type RecipesProps = {
+  tokenRepository: TokenRepository;
+};
+
+export const Recipes = ({ tokenRepository }: RecipesProps) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   useEffect(() => {
     fetch("https://backend-login-placeholder.deno.dev/api/recepies", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${tokenRepository.find()}`,
       },
     })
       .then((response) => response.json())

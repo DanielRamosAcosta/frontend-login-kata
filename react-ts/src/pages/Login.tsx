@@ -5,14 +5,13 @@ import { PasswordField } from "../components/PasswordField.js";
 import { Title } from "../components/Title.js";
 import { Button } from "../components/Button.js";
 import { translateError } from "../utils/translateError.js";
-import { AuthService } from "../AuthService.ts";
+import { LoginUseCase } from "../services/LoginUseCase.ts";
 
 type LoginProps = {
-  navigate: (to: string) => void;
-  authService: AuthService;
+  loginUseCase: LoginUseCase;
 };
 
-export const Login = ({ navigate, authService }: LoginProps) => {
+export const Login = ({ loginUseCase }: LoginProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -31,14 +30,8 @@ export const Login = ({ navigate, authService }: LoginProps) => {
           setIsLoading(true);
           setErrorMessage(null);
 
-          authService
+          loginUseCase
             .login(email, password)
-            .then((payload) => {
-              localStorage.setItem("token", payload);
-            })
-            .then(() => {
-              navigate("/recipes");
-            })
             .catch((error) => {
               setErrorMessage(error.message);
             })
