@@ -40,6 +40,6 @@
     "prettier": "3.5.3",
     "typescript": "5.8.2",
     "vite": "6.2.0",
-    "vitest": "3.0.7"
+    "vitest": "3.0.8"
   }
 }
